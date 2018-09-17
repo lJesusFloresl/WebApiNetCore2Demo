@@ -4,6 +4,31 @@
         <name>WebApiNetCore2Demo</name>
     </assembly>
     <members>
+        <member name="T:WebApiNetCore2Demo.ActionDescriptorExtensions">
+            <summary>
+            Clase utilizada para manipular el control de versionamiento de la api
+            </summary>
+        </member>
+        <member name="M:WebApiNetCore2Demo.ActionDescriptorExtensions.GetApiVersion(Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor)">
+            <summary>
+            Obtiene la version de la api
+            </summary>
+            <param name="actionDescriptor"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApiNetCore2Demo.ApiVersionOperationFilter">
+            <summary>
+            Clase utilizada para personalizar el versionamiento con Swagger
+            <see cref="!:https://blog.jimismith.me/blogs/api-versioning-in-aspnet-core-with-nice-swagg/"/>
+            </summary>
+        </member>
+        <member name="M:WebApiNetCore2Demo.ApiVersionOperationFilter.Apply(Swashbuckle.AspNetCore.Swagger.Operation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Swashbuckle genera el documento swagger
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
         <member name="T:WebApiNetCore2Demo.Controllers.v1.ProductoController">
             <summary>
             Controlador para Productos, utiliza el inyector de dependencias de Autofac
@@ -159,14 +184,19 @@
             Clase utilizada para el manejo del versionamiento de la web api
             </summary>
         </member>
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.ApiVersion">
+            <summary>
+            Obtiene ApiVersion
+            </summary>
+        </member>
         <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.ApiVersionRoute">
             <summary>
-            <para>api/v1</para>
+            <para>api/[ApiVersion]</para>
             </summary>
         </member>
         <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.ControllerRoute">
             <summary>
-            <para>api/v1/[controller]</para>
+            <para>api/[ApiVersion]/[controller]</para>
             </summary>
         </member>
         <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.ApiResponseFormat">
@@ -174,24 +204,49 @@
             <para>application/json</para>
             </summary>
         </member>
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.SwaggerEndpointDescription">
+            <summary>
+            <para>Web API Net Core 2.1 v[ApiVersion]</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.SwaggerEndpointUrl">
+            <summary>
+            <para>/swagger/v[ApiVersion]/swagger.json</para>
+            </summary>
+        </member>
         <member name="T:WebApiNetCore2Demo.Routes.ApiRouteV2">
             <summary>
             Clase utilizada para el manejo del versionamiento de la web api
             </summary>
         </member>
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.ApiVersion">
+            <summary>
+            Obtiene ApiVersion
+            </summary>
+        </member>
         <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.ApiVersionRoute">
             <summary>
-            <para>api/v1</para>
+            <para>api/[ApiVersion]</para>
             </summary>
         </member>
         <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.ControllerRoute">
             <summary>
-            <para>api/v1/[controller]</para>
+            <para>api/[ApiVersion]/[controller]</para>
             </summary>
         </member>
         <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.ApiResponseFormat">
             <summary>
             <para>application/json</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.SwaggerEndpointDescription">
+            <summary>
+            <para>Web API Net Core 2.1 v[ApiVersion]</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.SwaggerEndpointUrl">
+            <summary>
+            <para>/swagger/v[ApiVersion]/swagger.json</para>
             </summary>
         </member>
         <member name="T:WebApiNetCore2Demo.Services.ProductoService">
@@ -238,54 +293,14 @@
             Contiene la configuracion de Swagger para la documentacion de la api
             </summary>
         </member>
-        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.EndpointDescriptionV1">
-            <summary>
-            <para>Web API Net Core 2.1 v1</para>
-            </summary>
-        </member>
-        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.EndpointUrlV1">
-            <summary>
-            <para>/swagger/v1/swagger.json</para>
-            </summary>
-        </member>
-        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.EndpointDescriptionV2">
-            <summary>
-            <para>Web API Net Core 2.1 v2</para>
-            </summary>
-        </member>
-        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.EndpointUrlV2">
-            <summary>
-            <para>/swagger/v1/swagger.json</para>
-            </summary>
-        </member>
         <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.ContactName">
             <summary>
             <para>Jesus Flores</para>
             </summary>
         </member>
-        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocNameV1">
-            <summary>
-            <para>v1</para>
-            </summary>
-        </member>
-        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocNameV2">
-            <summary>
-            <para>v2</para>
-            </summary>
-        </member>
         <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocInfoTitle">
             <summary>
             <para>Web API Net Core 2.1</para>
-            </summary>
-        </member>
-        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocInfoVersionV1">
-            <summary>
-            <para>v1</para>
-            </summary>
-        </member>
-        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocInfoVersionV2">
-            <summary>
-            <para>v2</para>
             </summary>
         </member>
         <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocInfoDescription">

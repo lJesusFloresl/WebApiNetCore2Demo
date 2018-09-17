@@ -12,6 +12,9 @@ using Autofac.Extensions.DependencyInjection;
 using WebApiNetCore2Demo.Services;
 using WebApiNetCore2Demo.Interfaces;
 using WebApiNetCore2Demo.Models;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using System.Linq;
+using WebApiNetCore2Demo.Routes;
 
 namespace WebApiNetCore2Demo
 {
@@ -49,25 +52,44 @@ namespace WebApiNetCore2Demo
             #endregion
 
             #region Configuracion de Swagger
-            
+
+            services.AddApiVersioning(o =>
+            {
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.ApiVersionReader = new MediaTypeApiVersionReader();
+            });
+
             services.AddSwaggerGen(swagger =>
             {
                 var contact = new Contact() { Name = SwaggerConfiguration.ContactName };
-                swagger.SwaggerDoc(SwaggerConfiguration.DocNameV1, new Info
+                swagger.SwaggerDoc(ApiRouteV1.ApiVersion, new Info
                 {
                     Title = SwaggerConfiguration.DocInfoTitle,
-                    Version = SwaggerConfiguration.DocInfoVersionV1,
+                    Version = ApiRouteV1.ApiVersion,
                     Description = SwaggerConfiguration.DocInfoDescription,
                     Contact = contact
                 });
 
-                swagger.SwaggerDoc(SwaggerConfiguration.DocNameV2, new Info
-                {
-                    Title = SwaggerConfiguration.DocInfoTitle,
-                    Version = SwaggerConfiguration.DocInfoVersionV2,
-                    Description = SwaggerConfiguration.DocInfoDescription,
-                    Contact = contact
-                });
+                //swagger.SwaggerDoc(ApiRouteV2.ApiVersion, new Info
+                //{
+                //    Title = SwaggerConfiguration.DocInfoTitle,
+                //    Version = ApiRouteV2.ApiVersion,
+                //    Description = SwaggerConfiguration.DocInfoDescription,
+                //    Contact = contact
+                //});
+
+                //swagger.DocInclusionPredicate((apiVersion, apiDescription) =>
+                //{
+                //    var actionApiVersionModel = apiDescription.ActionDescriptor?.GetApiVersion();
+                //    if (actionApiVersionModel == null)
+                //        return true;
+                //    if (actionApiVersionModel.DeclaredApiVersions.Any())
+                //        return actionApiVersionModel.DeclaredApiVersions.Any(v => $"v{v.ToString()}" == apiVersion);
+                //    return actionApiVersionModel.ImplementedApiVersions.Any(v => $"v{v.ToString()}" == apiVersion);
+                //});
+
+                swagger.OperationFilter<ApiVersionOperationFilter>();
 
                 // Agrega la ruta de los comentarios para que sea leida por Swagger JSON and UI.
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, "WebApiNetCore2Demo.xml");
@@ -84,7 +106,7 @@ namespace WebApiNetCore2Demo
                 .As<IService<int, ProductoModel>>().InstancePerLifetimeScope();
 
             this.ApplicationContainer = builder.Build();
-            return new AutofacServiceProvider(this.ApplicationContainer); 
+            return new AutofacServiceProvider(this.ApplicationContainer);
 
             #endregion
         }
@@ -105,8 +127,8 @@ namespace WebApiNetCore2Demo
             // Habilita Swagger-ui para el endpoint generado.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint(SwaggerConfiguration.EndpointUrlV1, SwaggerConfiguration.EndpointDescriptionV1);
-                c.SwaggerEndpoint(SwaggerConfiguration.EndpointUrlV2, SwaggerConfiguration.EndpointDescriptionV2);
+                c.SwaggerEndpoint(ApiRouteV1.SwaggerEndpointUrl, ApiRouteV1.SwaggerEndpointDescription);
+                //c.SwaggerEndpoint(ApiRouteV2.SwaggerEndpointUrl, ApiRouteV2.SwaggerEndpointDescription);
             });
 
             if (env.IsDevelopment())

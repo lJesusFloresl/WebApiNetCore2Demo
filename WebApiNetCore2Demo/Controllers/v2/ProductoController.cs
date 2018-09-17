@@ -11,6 +11,7 @@ namespace WebApiNetCore2Demo.Controllers.v2
     /// Controlador para Productos, utiliza el inyector de dependencias de Autofac
     /// </summary>
     [ApiController]
+    [ApiVersion(ApiRouteV2.ApiVersion)]
     [Produces(ApiRouteV2.ApiResponseFormat)]
     [Route(ApiRouteV2.ControllerRoute)]
     public class ProductoController : ControllerBase
