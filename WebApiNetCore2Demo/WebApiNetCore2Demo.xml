@@ -1,0 +1,297 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebApiNetCore2Demo</name>
+    </assembly>
+    <members>
+        <member name="T:WebApiNetCore2Demo.Controllers.v1.ProductoController">
+            <summary>
+            Controlador para Productos, utiliza el inyector de dependencias de Autofac
+            </summary>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.#ctor(WebApiNetCore2Demo.Interfaces.IService{System.Int32,WebApiNetCore2Demo.Models.ProductoModel})">
+            <summary>
+            Constructor con inyeccion de servicio
+            </summary>
+            <param name="productoService"></param>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.GetProductos">
+            <summary>
+            Obtiene la lista de productos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.Get(System.Int32)">
+            <summary>
+            Obtiene un producto por id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.Post(System.String)">
+            <summary>
+            Guarda un producto
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.Put(System.Int32,System.String)">
+            <summary>
+            Actualiza un producto en base a su id
+            </summary>
+            <param name="id"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.Delete(System.Int32)">
+            <summary>
+            Elimina un producto en base a su id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApiNetCore2Demo.Controllers.v2.ProductoController">
+            <summary>
+            Controlador para Productos, utiliza el inyector de dependencias de Autofac
+            </summary>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.#ctor(WebApiNetCore2Demo.Interfaces.IService{System.Int32,WebApiNetCore2Demo.Models.ProductoModel})">
+            <summary>
+            Constructor con inyeccion de servicio
+            </summary>
+            <param name="productoService"></param>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.GetProductos">
+            <summary>
+            Obtiene la lista de productos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.Get(System.Int32)">
+            <summary>
+            Obtiene un producto por id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.Post(System.String)">
+            <summary>
+            Guarda un producto
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.Put(System.Int32,System.String)">
+            <summary>
+            Actualiza un producto en base a su id
+            </summary>
+            <param name="id"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.Delete(System.Int32)">
+            <summary>
+            Elimina un producto en base a su id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApiNetCore2Demo.Interfaces.IRepository`2">
+            <summary>
+            Interfaz que implementa todos los metodos que debe tener cualquier repositorio
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Interfaces.IRepository`2.Add(`1)">
+            <summary>
+            Agrega un nuevo registro
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Interfaces.IRepository`2.Delete(`0)">
+            <summary>
+            Elimina un registro en base a su id
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Interfaces.IRepository`2.Update(`1)">
+            <summary>
+            Actualiza un registro
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Interfaces.IRepository`2.GetAll">
+            <summary>
+            Obtiene todos los registros
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Interfaces.IRepository`2.GetById(`0)">
+            <summary>
+            Obtiene un registro en base a su id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApiNetCore2Demo.Interfaces.IService`2">
+            <summary>
+            Interfaz que implementa todos los metodos que debe tener cualquier servicio
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Interfaces.IService`2.GetAll">
+            <summary>
+            Obtiene todos los registros
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Interfaces.IService`2.GetById(`0)">
+            <summary>
+            Obtiene un registro en base a su id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApiNetCore2Demo.Routes.ApiRouteV1">
+            <summary>
+            Clase utilizada para el manejo del versionamiento de la web api
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.ApiVersionRoute">
+            <summary>
+            <para>api/v1</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.ControllerRoute">
+            <summary>
+            <para>api/v1/[controller]</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.ApiResponseFormat">
+            <summary>
+            <para>application/json</para>
+            </summary>
+        </member>
+        <member name="T:WebApiNetCore2Demo.Routes.ApiRouteV2">
+            <summary>
+            Clase utilizada para el manejo del versionamiento de la web api
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.ApiVersionRoute">
+            <summary>
+            <para>api/v1</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.ControllerRoute">
+            <summary>
+            <para>api/v1/[controller]</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.ApiResponseFormat">
+            <summary>
+            <para>application/json</para>
+            </summary>
+        </member>
+        <member name="T:WebApiNetCore2Demo.Services.ProductoService">
+            <summary>
+            Servicio para el manejo de productos
+            </summary>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Services.ProductoService.#ctor(Microsoft.Extensions.Logging.ILogger{WebApiNetCore2Demo.Services.ProductoService})">
+            <summary>
+            Constructor de ProductoService con logger
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Services.ProductoService.GetAll">
+            <summary>
+            Obtiene la lista de productos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Services.ProductoService.GetById(System.Int32)">
+            <summary>
+            Obtiene un producto por id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApiNetCore2Demo.Startup">
+            <summary>
+            Contiene toda la configuracion de la api de inicio
+            </summary>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="loggerFactory"></param>
+            <see cref="!:https://autofac.readthedocs.io/en/latest/integration/aspnetcore.html#differences-from-asp-net-classic"/>
+            <see cref="!:https://geeks.ms/jorge/category/web-api/"/>
+        </member>
+        <member name="T:WebApiNetCore2Demo.SwaggerConfiguration">
+            <summary>
+            Contiene la configuracion de Swagger para la documentacion de la api
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.EndpointDescriptionV1">
+            <summary>
+            <para>Web API Net Core 2.1 v1</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.EndpointUrlV1">
+            <summary>
+            <para>/swagger/v1/swagger.json</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.EndpointDescriptionV2">
+            <summary>
+            <para>Web API Net Core 2.1 v2</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.EndpointUrlV2">
+            <summary>
+            <para>/swagger/v1/swagger.json</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.ContactName">
+            <summary>
+            <para>Jesus Flores</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocNameV1">
+            <summary>
+            <para>v1</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocNameV2">
+            <summary>
+            <para>v2</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocInfoTitle">
+            <summary>
+            <para>Web API Net Core 2.1</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocInfoVersionV1">
+            <summary>
+            <para>v1</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocInfoVersionV2">
+            <summary>
+            <para>v2</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocInfoDescription">
+            <summary>
+            <para>Ejemplo de Web API en ASP.NET Core 2</para>
+            </summary>
+        </member>
+    </members>
+</doc>
