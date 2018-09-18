@@ -16,6 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using WebApiNetCore2Demo.Models.Database;
 using WebApiNetCore2Demo.Repositories;
 using WebApiNetCore2Demo.Implementations;
+using System.Linq;
+using WebApiNetCore2Demo.Controllers;
 
 namespace WebApiNetCore2Demo
 {
@@ -48,6 +50,11 @@ namespace WebApiNetCore2Demo
                 options.SuppressInferBindingSourcesForParameters = true;
                 options.SuppressModelStateInvalidFilter = true;
             });
+
+            #endregion
+
+            #region Configuracion de Swagger y Versionamiento de Api
+
             services.AddApiVersioning(o =>
             {
                 o.ReportApiVersions = true;
@@ -55,27 +62,22 @@ namespace WebApiNetCore2Demo
                 o.DefaultApiVersion = new ApiVersion(1, 0);
             });
 
-            #endregion
-
-            #region Configuracion de Swagger
-
             services.AddSwaggerGen(swagger =>
             {
                 var contact = new Contact() { Name = SwaggerConfiguration.ContactName };
-                swagger.SwaggerDoc("v1", new Info
+
+                swagger.SwaggerDoc(ApiVersions.v1, new Info
                 {
                     Title = SwaggerConfiguration.DocInfoTitle,
-                    Version = "v1",
+                    Version = ApiVersions.v1,
                     Description = SwaggerConfiguration.DocInfoDescription,
                     Contact = contact
                 });
-
-                swagger.OperationFilter<SwaggerDefaultValues>();
             });
 
             #endregion
 
-            #region Inyeccion de dependencias
+            #region Registro de clases para la Inyeccion de dependencias
 
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddDbContext<ComprasContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:ComprasConnection"]));
@@ -101,8 +103,7 @@ namespace WebApiNetCore2Demo
             // Habilita Swagger-ui para el endpoint generado.
             app.UseSwaggerUI(c =>
             {
-                //c.SwaggerEndpoint(ApiRoutesBase.GetSwaggerEndpointUrl(ApiVersions.v1), ApiRoutesBase.GetSwaggerEndpointDescription(ApiVersions.v1));
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", ApiRoutesBase.GetSwaggerEndpointDescription(ApiVersions.v1));
+                c.SwaggerEndpoint(SwaggerConfiguration.GetEndpointUrl(ApiVersions.v1), SwaggerConfiguration.EndpointDescription);
             });
 
             if (env.IsDevelopment())

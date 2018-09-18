@@ -5,15 +5,17 @@ using WebApiNetCore2Demo.Interfaces;
 using WebApiNetCore2Demo.Models.Database;
 using WebApiNetCore2Demo.Routes;
 
-namespace WebApiNetCore2Demo.Controllers.v2
+namespace WebApiNetCore2Demo.Controllers
 {
     /// <summary>
-    /// Controlador para Productos, utiliza el inyector de dependencias de Autofac
+    /// Controlador para Productos
+    /// <para>Ejemplo de controlador manejado por versiones</para>
     /// </summary>
     [ApiController]
-    [ApiVersion(ApiVersions.v2)]
     [Produces(ApiRoutesBase.ApiResponseFormat)]
     [Route(ApiRoutesBase.ControllerRoute)]
+    [ApiVersion(ApiVersions.v1, Deprecated = true)]
+    [ApiVersion(ApiVersions.v2)]
     public class ProductoController : ControllerBase
     {
         private readonly IService<int, Producto> productoService;

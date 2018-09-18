@@ -26,44 +26,30 @@ namespace WebApiNetCore2Demo
         /// <para>Ejemplo de Web API en ASP.NET Core 2</para>
         /// </summary>
         public const string DocInfoDescription = "Ejemplo de Web API en ASP.NET Core 2 con IoC y DI";
-    }
 
-    /// <summary>
-    /// Clase que implementa los filtros necesarios para habilitar el versionamiento en Swagger
-    /// </summary>
-    public class SwaggerDefaultValues : IOperationFilter
-    {
-        public void Apply(Operation operation, OperationFilterContext context)
+        /// <summary>
+        /// <para>Web API Net Core 2.1</para>
+        /// </summary>
+        public const string EndpointDescription = "Web API Net Core 2.1";
+
+        /// <summary>
+        /// <para>Web API Net Core 2.1</para>
+        /// </summary>
+        public const string EndpointUrl = "/swagger/" + JsonVersion + "/swagger.json";
+
+        /// <summary>
+        /// <para>Web API Net Core 2.1</para>
+        /// </summary>
+        public const string JsonVersion = "v1";
+
+        /// <summary>
+        /// Obtiene la url del json de swagger en base a una version
+        /// </summary>
+        /// <param name="ApiVersion"></param>
+        /// <returns></returns>
+        public static string GetEndpointUrl(string ApiVersion)
         {
-            if (operation.Parameters == null)
-            {
-                return;
-            }
-
-            foreach (var parameter in operation.Parameters.OfType<NonBodyParameter>())
-            {
-                var description = context.ApiDescription
-                                         .ParameterDescriptions
-                                         .First(p => p.Name == parameter.Name);
-                var routeInfo = description.RouteInfo;
-
-                if (parameter.Description == null)
-                {
-                    parameter.Description = description.ModelMetadata?.Description;
-                }
-
-                if (routeInfo == null)
-                {
-                    continue;
-                }
-
-                if (parameter.Default == null)
-                {
-                    parameter.Default = routeInfo.DefaultValue;
-                }
-
-                parameter.Required |= !routeInfo.IsOptional;
-            }
+            return "/swagger/" + ApiVersion + "/swagger.json";
         }
     }
 }

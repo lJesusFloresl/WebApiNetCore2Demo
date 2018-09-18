@@ -19,26 +19,5 @@
         /// <para>application/json</para>
         /// </summary>
         public const string ApiResponseFormat = "application/json";
-
-
-        /// <summary>
-        /// Obtiene la descripcion para el endpoint que utiliza swagger
-        /// </summary>
-        /// <param name="ApiVersion"></param>
-        /// <returns></returns>
-        public static string GetSwaggerEndpointDescription(string ApiVersion)
-        {
-            return "Web API Net Core 2.1 v" + ApiVersion;
-        }
-
-        /// <summary>
-        /// Obtiene la url para el endpoint que utiliza swagger
-        /// </summary>
-        /// <param name="ApiVersion"></param>
-        /// <returns></returns>
-        public static string GetSwaggerEndpointUrl(string ApiVersion)
-        {
-            return "/swagger/" + ApiVersion + "/swagger.json";
-        }
     }
 }

@@ -4,38 +4,39 @@
         <name>WebApiNetCore2Demo</name>
     </assembly>
     <members>
-        <member name="T:WebApiNetCore2Demo.Controllers.v1.ProductoController">
+        <member name="T:WebApiNetCore2Demo.Controllers.ProductoController">
             <summary>
-            Controlador para Productos, utiliza el inyector de dependencias de Autofac
+            Controlador para Productos
+            <para>Ejemplo de controlador manejado por versiones</para>
             </summary>
         </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.#ctor(WebApiNetCore2Demo.Interfaces.IService{System.Int32,WebApiNetCore2Demo.Models.Database.Producto})">
+        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.#ctor(WebApiNetCore2Demo.Interfaces.IService{System.Int32,WebApiNetCore2Demo.Models.Database.Producto})">
             <summary>
             Constructor con inyeccion de servicio
             </summary>
             <param name="productoService"></param>
         </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.GetProductos">
+        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.GetProductos">
             <summary>
             Obtiene la lista de productos
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.Get(System.Int32)">
+        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.Get(System.Int32)">
             <summary>
             Obtiene un producto por id
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.Post(System.String)">
+        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.Post(System.String)">
             <summary>
             Guarda un producto
             </summary>
             <param name="value"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.Put(System.Int32,System.String)">
+        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.Put(System.Int32,System.String)">
             <summary>
             Actualiza un producto en base a su id
             </summary>
@@ -43,53 +44,7 @@
             <param name="value"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.Delete(System.Int32)">
-            <summary>
-            Elimina un producto en base a su id
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="T:WebApiNetCore2Demo.Controllers.v2.ProductoController">
-            <summary>
-            Controlador para Productos, utiliza el inyector de dependencias de Autofac
-            </summary>
-        </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.#ctor(WebApiNetCore2Demo.Interfaces.IService{System.Int32,WebApiNetCore2Demo.Models.Database.Producto})">
-            <summary>
-            Constructor con inyeccion de servicio
-            </summary>
-            <param name="productoService"></param>
-        </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.GetProductos">
-            <summary>
-            Obtiene la lista de productos
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.Get(System.Int32)">
-            <summary>
-            Obtiene un producto por id
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.Post(System.String)">
-            <summary>
-            Guarda un producto
-            </summary>
-            <param name="value"></param>
-            <returns></returns>
-        </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.Put(System.Int32,System.String)">
-            <summary>
-            Actualiza un producto en base a su id
-            </summary>
-            <param name="id"></param>
-            <param name="value"></param>
-            <returns></returns>
-        </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.Delete(System.Int32)">
+        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.Delete(System.Int32)">
             <summary>
             Elimina un producto en base a su id
             </summary>
@@ -210,20 +165,6 @@
             <para>application/json</para>
             </summary>
         </member>
-        <member name="M:WebApiNetCore2Demo.Routes.ApiRoutesBase.GetSwaggerEndpointDescription(System.String)">
-            <summary>
-            Obtiene la descripcion para el endpoint que utiliza swagger
-            </summary>
-            <param name="ApiVersion"></param>
-            <returns></returns>
-        </member>
-        <member name="M:WebApiNetCore2Demo.Routes.ApiRoutesBase.GetSwaggerEndpointUrl(System.String)">
-            <summary>
-            Obtiene la url para el endpoint que utiliza swagger
-            </summary>
-            <param name="ApiVersion"></param>
-            <returns></returns>
-        </member>
         <member name="T:WebApiNetCore2Demo.Routes.ApiVersions">
             <summary>
             Clase que maneja las versiones de la api
@@ -289,10 +230,27 @@
             <para>Ejemplo de Web API en ASP.NET Core 2</para>
             </summary>
         </member>
-        <member name="T:WebApiNetCore2Demo.SwaggerDefaultValues">
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.EndpointDescription">
             <summary>
-            Clase que implementa los filtros necesarios para habilitar el versionamiento en Swagger
+            <para>Web API Net Core 2.1</para>
             </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.EndpointUrl">
+            <summary>
+            <para>Web API Net Core 2.1</para>
+            </summary>
+        </member>
+        <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.JsonVersion">
+            <summary>
+            <para>Web API Net Core 2.1</para>
+            </summary>
+        </member>
+        <member name="M:WebApiNetCore2Demo.SwaggerConfiguration.GetEndpointUrl(System.String)">
+            <summary>
+            Obtiene la url del json de swagger en base a una version
+            </summary>
+            <param name="ApiVersion"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>
