@@ -5,37 +5,38 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApiNetCore2Demo.Interfaces;
 using WebApiNetCore2Demo.Models;
+using WebApiNetCore2Demo.Models.Database;
+using WebApiNetCore2Demo.Repositories;
 
 namespace WebApiNetCore2Demo.Services
 {
     /// <summary>
     /// Servicio para el manejo de productos
     /// </summary>
-    public class ProductoService : IService<int, ProductoModel>
+    public class ProductoService : IService<int, Producto>
     {
-        private readonly ILogger<ProductoService> _logger;
+        private readonly ILogger<ProductoService> LOGGER;
+        private readonly IProductoRepository productoRepository;
 
         /// <summary>
         /// Constructor de ProductoService con logger
         /// </summary>
         /// <param name="logger"></param>
-        public ProductoService(ILogger<ProductoService> logger)
+        /// <param name="repository"></param>
+        public ProductoService(ILogger<ProductoService> logger, IProductoRepository repository)
         {
-            _logger = logger;
+            LOGGER = logger;
+            productoRepository = repository;
         }
 
         /// <summary>
         /// Obtiene la lista de productos
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ProductoModel> GetAll()
+        public IEnumerable<Producto> GetAll()
         {
-            _logger.LogDebug("{method} called", nameof(GetAll));
-
-            List<ProductoModel> productos = new List<ProductoModel>();
-            productos.Add(new ProductoModel() { id = 1, clave = "00001", descripcion = "COMPUTADORA HP PAVILION", precioUnitario = 8750 });
-            productos.Add(new ProductoModel() { id = 2, clave = "00002", descripcion = "LAPTOP ACER ONE", precioUnitario = 4900 });
-            return productos;
+            LOGGER.LogDebug("{method} called", nameof(GetAll));
+            return productoRepository.GetAll().ToList();
         }
 
         /// <summary>
@@ -43,11 +44,10 @@ namespace WebApiNetCore2Demo.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ProductoModel GetById(int id)
+        public Producto GetById(int id)
         {
-            _logger.LogDebug("{method} called with {id}", nameof(GetById), id);
-
-            return new ProductoModel();
+            LOGGER.LogDebug("{method} called with {id}", nameof(GetById), id);
+            return productoRepository.GetById(id);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Autofac;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -8,13 +7,15 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using Microsoft.Extensions.Logging;
-using Autofac.Extensions.DependencyInjection;
 using WebApiNetCore2Demo.Services;
 using WebApiNetCore2Demo.Interfaces;
 using WebApiNetCore2Demo.Models;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using System.Linq;
 using WebApiNetCore2Demo.Routes;
+using Microsoft.EntityFrameworkCore;
+using WebApiNetCore2Demo.Models.Database;
+using WebApiNetCore2Demo.Repositories;
+using WebApiNetCore2Demo.Implementations;
 
 namespace WebApiNetCore2Demo
 {
@@ -32,81 +33,54 @@ namespace WebApiNetCore2Demo
             this.Configuration = builder.Build();
         }
 
-        public IContainer ApplicationContainer { get; private set; }
-
         public IConfigurationRoot Configuration { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             #region Configuracion de Mvc
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddOptions();
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressConsumesConstraintForFormFileParameters = true;
                 options.SuppressInferBindingSourcesForParameters = true;
                 options.SuppressModelStateInvalidFilter = true;
             });
+            services.AddApiVersioning(o =>
+            {
+                o.ReportApiVersions = true;
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+            });
 
             #endregion
 
             #region Configuracion de Swagger
 
-            services.AddApiVersioning(o =>
-            {
-                o.DefaultApiVersion = new ApiVersion(1, 0);
-                o.AssumeDefaultVersionWhenUnspecified = true;
-                o.ApiVersionReader = new MediaTypeApiVersionReader();
-            });
-
             services.AddSwaggerGen(swagger =>
             {
                 var contact = new Contact() { Name = SwaggerConfiguration.ContactName };
-                swagger.SwaggerDoc(ApiRouteV1.ApiVersion, new Info
+                swagger.SwaggerDoc("v1", new Info
                 {
                     Title = SwaggerConfiguration.DocInfoTitle,
-                    Version = ApiRouteV1.ApiVersion,
+                    Version = "v1",
                     Description = SwaggerConfiguration.DocInfoDescription,
                     Contact = contact
                 });
 
-                //swagger.SwaggerDoc(ApiRouteV2.ApiVersion, new Info
-                //{
-                //    Title = SwaggerConfiguration.DocInfoTitle,
-                //    Version = ApiRouteV2.ApiVersion,
-                //    Description = SwaggerConfiguration.DocInfoDescription,
-                //    Contact = contact
-                //});
-
-                //swagger.DocInclusionPredicate((apiVersion, apiDescription) =>
-                //{
-                //    var actionApiVersionModel = apiDescription.ActionDescriptor?.GetApiVersion();
-                //    if (actionApiVersionModel == null)
-                //        return true;
-                //    if (actionApiVersionModel.DeclaredApiVersions.Any())
-                //        return actionApiVersionModel.DeclaredApiVersions.Any(v => $"v{v.ToString()}" == apiVersion);
-                //    return actionApiVersionModel.ImplementedApiVersions.Any(v => $"v{v.ToString()}" == apiVersion);
-                //});
-
-                swagger.OperationFilter<ApiVersionOperationFilter>();
-
-                // Agrega la ruta de los comentarios para que sea leida por Swagger JSON and UI.
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, "WebApiNetCore2Demo.xml");
-                swagger.IncludeXmlComments(xmlPath);
+                swagger.OperationFilter<SwaggerDefaultValues>();
             });
 
             #endregion
 
-            #region Configuracion de Autofac (inyeccion de dependencias)
+            #region Inyeccion de dependencias
 
-            var builder = new ContainerBuilder();
-            builder.Populate(services);
-            builder.Register(c => new ProductoService(c.Resolve<ILogger<ProductoService>>()))
-                .As<IService<int, ProductoModel>>().InstancePerLifetimeScope();
-
-            this.ApplicationContainer = builder.Build();
-            return new AutofacServiceProvider(this.ApplicationContainer);
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddDbContext<ComprasContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:ComprasConnection"]));
+            services.AddTransient<IService<int, Producto>, ProductoService>();
+            services.AddTransient<IProductoRepository, ProductoRepository>();
 
             #endregion
         }
@@ -127,8 +101,8 @@ namespace WebApiNetCore2Demo
             // Habilita Swagger-ui para el endpoint generado.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint(ApiRouteV1.SwaggerEndpointUrl, ApiRouteV1.SwaggerEndpointDescription);
-                //c.SwaggerEndpoint(ApiRouteV2.SwaggerEndpointUrl, ApiRouteV2.SwaggerEndpointDescription);
+                //c.SwaggerEndpoint(ApiRoutesBase.GetSwaggerEndpointUrl(ApiVersions.v1), ApiRoutesBase.GetSwaggerEndpointDescription(ApiVersions.v1));
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", ApiRoutesBase.GetSwaggerEndpointDescription(ApiVersions.v1));
             });
 
             if (env.IsDevelopment())

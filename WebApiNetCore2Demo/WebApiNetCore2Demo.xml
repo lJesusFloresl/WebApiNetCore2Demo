@@ -4,37 +4,12 @@
         <name>WebApiNetCore2Demo</name>
     </assembly>
     <members>
-        <member name="T:WebApiNetCore2Demo.ActionDescriptorExtensions">
-            <summary>
-            Clase utilizada para manipular el control de versionamiento de la api
-            </summary>
-        </member>
-        <member name="M:WebApiNetCore2Demo.ActionDescriptorExtensions.GetApiVersion(Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor)">
-            <summary>
-            Obtiene la version de la api
-            </summary>
-            <param name="actionDescriptor"></param>
-            <returns></returns>
-        </member>
-        <member name="T:WebApiNetCore2Demo.ApiVersionOperationFilter">
-            <summary>
-            Clase utilizada para personalizar el versionamiento con Swagger
-            <see cref="!:https://blog.jimismith.me/blogs/api-versioning-in-aspnet-core-with-nice-swagg/"/>
-            </summary>
-        </member>
-        <member name="M:WebApiNetCore2Demo.ApiVersionOperationFilter.Apply(Swashbuckle.AspNetCore.Swagger.Operation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
-            <summary>
-            Swashbuckle genera el documento swagger
-            </summary>
-            <param name="operation"></param>
-            <param name="context"></param>
-        </member>
         <member name="T:WebApiNetCore2Demo.Controllers.v1.ProductoController">
             <summary>
             Controlador para Productos, utiliza el inyector de dependencias de Autofac
             </summary>
         </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.#ctor(WebApiNetCore2Demo.Interfaces.IService{System.Int32,WebApiNetCore2Demo.Models.ProductoModel})">
+        <member name="M:WebApiNetCore2Demo.Controllers.v1.ProductoController.#ctor(WebApiNetCore2Demo.Interfaces.IService{System.Int32,WebApiNetCore2Demo.Models.Database.Producto})">
             <summary>
             Constructor con inyeccion de servicio
             </summary>
@@ -80,7 +55,7 @@
             Controlador para Productos, utiliza el inyector de dependencias de Autofac
             </summary>
         </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.#ctor(WebApiNetCore2Demo.Interfaces.IService{System.Int32,WebApiNetCore2Demo.Models.ProductoModel})">
+        <member name="M:WebApiNetCore2Demo.Controllers.v2.ProductoController.#ctor(WebApiNetCore2Demo.Interfaces.IService{System.Int32,WebApiNetCore2Demo.Models.Database.Producto})">
             <summary>
             Constructor con inyeccion de servicio
             </summary>
@@ -179,74 +154,79 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="T:WebApiNetCore2Demo.Routes.ApiRouteV1">
+        <member name="T:WebApiNetCore2Demo.Repositories.IProductoRepository">
             <summary>
-            Clase utilizada para el manejo del versionamiento de la web api
+            Repositorio de Producto
             </summary>
         </member>
-        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.ApiVersion">
+        <member name="M:WebApiNetCore2Demo.Repositories.IProductoRepository.Add(WebApiNetCore2Demo.Models.Database.Producto)">
             <summary>
-            Obtiene ApiVersion
+            Agrega un nuevo registro
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Repositories.IProductoRepository.Delete(System.Int32)">
+            <summary>
+            Elimina un registro en base a su id
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Repositories.IProductoRepository.Update(WebApiNetCore2Demo.Models.Database.Producto)">
+            <summary>
+            Actualiza un registro
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Repositories.IProductoRepository.GetAll">
+            <summary>
+            Obtiene todos los registros
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Repositories.IProductoRepository.GetById(System.Int32)">
+            <summary>
+            Obtiene un registro en base a su id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApiNetCore2Demo.Routes.ApiRoutesBase">
+            <summary>
+            Clase que maneja las configuraciones de versionamiento de api
             </summary>
         </member>
-        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.ApiVersionRoute">
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRoutesBase.ApiVersionRoute">
             <summary>
             <para>api/[ApiVersion]</para>
             </summary>
         </member>
-        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.ControllerRoute">
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRoutesBase.ControllerRoute">
             <summary>
             <para>api/[ApiVersion]/[controller]</para>
             </summary>
         </member>
-        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.ApiResponseFormat">
+        <member name="F:WebApiNetCore2Demo.Routes.ApiRoutesBase.ApiResponseFormat">
             <summary>
             <para>application/json</para>
             </summary>
         </member>
-        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.SwaggerEndpointDescription">
+        <member name="M:WebApiNetCore2Demo.Routes.ApiRoutesBase.GetSwaggerEndpointDescription(System.String)">
             <summary>
-            <para>Web API Net Core 2.1 v[ApiVersion]</para>
+            Obtiene la descripcion para el endpoint que utiliza swagger
             </summary>
+            <param name="ApiVersion"></param>
+            <returns></returns>
         </member>
-        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV1.SwaggerEndpointUrl">
+        <member name="M:WebApiNetCore2Demo.Routes.ApiRoutesBase.GetSwaggerEndpointUrl(System.String)">
             <summary>
-            <para>/swagger/v[ApiVersion]/swagger.json</para>
+            Obtiene la url para el endpoint que utiliza swagger
             </summary>
+            <param name="ApiVersion"></param>
+            <returns></returns>
         </member>
-        <member name="T:WebApiNetCore2Demo.Routes.ApiRouteV2">
+        <member name="T:WebApiNetCore2Demo.Routes.ApiVersions">
             <summary>
-            Clase utilizada para el manejo del versionamiento de la web api
-            </summary>
-        </member>
-        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.ApiVersion">
-            <summary>
-            Obtiene ApiVersion
-            </summary>
-        </member>
-        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.ApiVersionRoute">
-            <summary>
-            <para>api/[ApiVersion]</para>
-            </summary>
-        </member>
-        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.ControllerRoute">
-            <summary>
-            <para>api/[ApiVersion]/[controller]</para>
-            </summary>
-        </member>
-        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.ApiResponseFormat">
-            <summary>
-            <para>application/json</para>
-            </summary>
-        </member>
-        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.SwaggerEndpointDescription">
-            <summary>
-            <para>Web API Net Core 2.1 v[ApiVersion]</para>
-            </summary>
-        </member>
-        <member name="F:WebApiNetCore2Demo.Routes.ApiRouteV2.SwaggerEndpointUrl">
-            <summary>
-            <para>/swagger/v[ApiVersion]/swagger.json</para>
+            Clase que maneja las versiones de la api
             </summary>
         </member>
         <member name="T:WebApiNetCore2Demo.Services.ProductoService">
@@ -254,11 +234,12 @@
             Servicio para el manejo de productos
             </summary>
         </member>
-        <member name="M:WebApiNetCore2Demo.Services.ProductoService.#ctor(Microsoft.Extensions.Logging.ILogger{WebApiNetCore2Demo.Services.ProductoService})">
+        <member name="M:WebApiNetCore2Demo.Services.ProductoService.#ctor(Microsoft.Extensions.Logging.ILogger{WebApiNetCore2Demo.Services.ProductoService},WebApiNetCore2Demo.Repositories.IProductoRepository)">
             <summary>
             Constructor de ProductoService con logger
             </summary>
             <param name="logger"></param>
+            <param name="repository"></param>
         </member>
         <member name="M:WebApiNetCore2Demo.Services.ProductoService.GetAll">
             <summary>
@@ -306,6 +287,11 @@
         <member name="F:WebApiNetCore2Demo.SwaggerConfiguration.DocInfoDescription">
             <summary>
             <para>Ejemplo de Web API en ASP.NET Core 2</para>
+            </summary>
+        </member>
+        <member name="T:WebApiNetCore2Demo.SwaggerDefaultValues">
+            <summary>
+            Clase que implementa los filtros necesarios para habilitar el versionamiento en Swagger
             </summary>
         </member>
     </members>

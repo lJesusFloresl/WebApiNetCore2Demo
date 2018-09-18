@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebApiNetCore2Demo.Interfaces;
-using WebApiNetCore2Demo.Models;
+using WebApiNetCore2Demo.Models.Database;
 using WebApiNetCore2Demo.Routes;
 
 namespace WebApiNetCore2Demo.Controllers.v2
@@ -11,20 +11,20 @@ namespace WebApiNetCore2Demo.Controllers.v2
     /// Controlador para Productos, utiliza el inyector de dependencias de Autofac
     /// </summary>
     [ApiController]
-    [ApiVersion(ApiRouteV2.ApiVersion)]
-    [Produces(ApiRouteV2.ApiResponseFormat)]
-    [Route(ApiRouteV2.ControllerRoute)]
+    [ApiVersion(ApiVersions.v2)]
+    [Produces(ApiRoutesBase.ApiResponseFormat)]
+    [Route(ApiRoutesBase.ControllerRoute)]
     public class ProductoController : ControllerBase
     {
-        private readonly IService<int, ProductoModel> _productoService;
+        private readonly IService<int, Producto> productoService;
 
         /// <summary>
         /// Constructor con inyeccion de servicio
         /// </summary>
         /// <param name="productoService"></param>
-        public ProductoController(IService<int, ProductoModel> productoService)
+        public ProductoController(IService<int, Producto> productoService)
         {
-            _productoService = productoService;
+            this.productoService = productoService;
         }
 
         /// <summary>
@@ -32,9 +32,9 @@ namespace WebApiNetCore2Demo.Controllers.v2
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<IEnumerable<ProductoModel>> GetProductos()
+        public ActionResult<IEnumerable<Producto>> GetProductos()
         {
-            return _productoService.GetAll().ToList();
+            return productoService.GetAll().ToList();
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace WebApiNetCore2Demo.Controllers.v2
         /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(404)]
-        public ActionResult<ProductoModel> Get(int id)
+        public ActionResult<Producto> Get(int id)
         {
-            return _productoService.GetById(id);
+            return productoService.GetById(id);
         }
 
         /// <summary>

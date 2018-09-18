@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +25,45 @@ namespace WebApiNetCore2Demo
         /// <summary>
         /// <para>Ejemplo de Web API en ASP.NET Core 2</para>
         /// </summary>
-        public const string DocInfoDescription = "Ejemplo de Web API en ASP.NET Core 2 con IoC y DI Autofac";
+        public const string DocInfoDescription = "Ejemplo de Web API en ASP.NET Core 2 con IoC y DI";
+    }
+
+    /// <summary>
+    /// Clase que implementa los filtros necesarios para habilitar el versionamiento en Swagger
+    /// </summary>
+    public class SwaggerDefaultValues : IOperationFilter
+    {
+        public void Apply(Operation operation, OperationFilterContext context)
+        {
+            if (operation.Parameters == null)
+            {
+                return;
+            }
+
+            foreach (var parameter in operation.Parameters.OfType<NonBodyParameter>())
+            {
+                var description = context.ApiDescription
+                                         .ParameterDescriptions
+                                         .First(p => p.Name == parameter.Name);
+                var routeInfo = description.RouteInfo;
+
+                if (parameter.Description == null)
+                {
+                    parameter.Description = description.ModelMetadata?.Description;
+                }
+
+                if (routeInfo == null)
+                {
+                    continue;
+                }
+
+                if (parameter.Default == null)
+                {
+                    parameter.Default = routeInfo.DefaultValue;
+                }
+
+                parameter.Required |= !routeInfo.IsOptional;
+            }
+        }
     }
 }

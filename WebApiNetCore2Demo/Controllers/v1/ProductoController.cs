@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebApiNetCore2Demo.Interfaces;
-using WebApiNetCore2Demo.Models;
+using WebApiNetCore2Demo.Models.Database;
 using WebApiNetCore2Demo.Routes;
 
 namespace WebApiNetCore2Demo.Controllers.v1
@@ -11,18 +11,18 @@ namespace WebApiNetCore2Demo.Controllers.v1
     /// Controlador para Productos, utiliza el inyector de dependencias de Autofac
     /// </summary>
     [ApiController]
-    [ApiVersion(ApiRouteV1.ApiVersion)]
-    [Produces(ApiRouteV1.ApiResponseFormat)]
-    [Route(ApiRouteV1.ControllerRoute)]
+    [ApiVersion(ApiVersions.v1)]
+    [Produces(ApiRoutesBase.ApiResponseFormat)]
+    [Route(ApiRoutesBase.ControllerRoute)]
     public class ProductoController : ControllerBase
     {
-        private readonly IService<int, ProductoModel> _productoService;
+        private readonly IService<int, Producto> _productoService;
 
         /// <summary>
         /// Constructor con inyeccion de servicio
         /// </summary>
         /// <param name="productoService"></param>
-        public ProductoController(IService<int, ProductoModel> productoService)
+        public ProductoController(IService<int, Producto> productoService)
         {
             _productoService = productoService;
         }
@@ -32,7 +32,7 @@ namespace WebApiNetCore2Demo.Controllers.v1
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<IEnumerable<ProductoModel>> GetProductos()
+        public ActionResult<IEnumerable<Producto>> GetProductos()
         {
             return _productoService.GetAll().ToList();
         }
@@ -44,7 +44,7 @@ namespace WebApiNetCore2Demo.Controllers.v1
         /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(404)]
-        public ActionResult<ProductoModel> Get(int id)
+        public ActionResult<Producto> Get(int id)
         {
             return _productoService.GetById(id);
         }
