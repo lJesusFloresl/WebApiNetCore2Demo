@@ -30,8 +30,10 @@ namespace WebApiNetCore2Demo.Implementations
             {
                 context.Entry(entity).State = EntityState.Deleted;
                 await context.SaveChangesAsync();
+                return true;
             }
-            return true;
+            else
+                return false;
         }
 
         public async Task<IEnumerable<Producto>> GetAll()
