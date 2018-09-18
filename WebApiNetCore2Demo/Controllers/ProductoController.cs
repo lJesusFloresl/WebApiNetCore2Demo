@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApiNetCore2Demo.Interfaces;
 using WebApiNetCore2Demo.Models.Database;
 using WebApiNetCore2Demo.Routes;
+using WebApiNetCore2Demo.Utils;
 
 namespace WebApiNetCore2Demo.Controllers
 {
@@ -34,9 +37,11 @@ namespace WebApiNetCore2Demo.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<IEnumerable<Producto>> GetProductos()
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetProductos()
         {
-            return productoService.GetAll().ToList();
+            var productos = await productoService.GetAll();
+            return Ok(productos);
         }
 
         /// <summary>
@@ -45,35 +50,50 @@ namespace WebApiNetCore2Demo.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [ProducesResponseType(404)]
-        public ActionResult<Producto> Get(int id)
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> Get(int id)
         {
-            return productoService.GetById(id);
+            var producto = await productoService.GetById(id);
+            if (producto == null)
+                return NotFound(Constantes.MENSAJE_NOT_FOUND);
+            else
+                return Ok(producto);
         }
 
         /// <summary>
         /// Guarda un producto
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="producto"></param>
         /// <returns></returns>
         [HttpPost]
-        [ProducesResponseType(400)]
-        public ActionResult<bool> Post([FromBody] string value)
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Post([FromBody] Producto producto)
         {
-            return BadRequest(ModelState);
+            var guardado = await productoService.Add(producto);
+            if (guardado.exito)
+                return Ok(guardado);
+            else
+                return BadRequest(guardado);
         }
 
         /// <summary>
         /// Actualiza un producto en base a su id
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="producto"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        [ProducesResponseType(400)]
-        public ActionResult<bool> Put(int id, [FromBody] string value)
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Put(int id, [FromBody] Producto producto)
         {
-            return BadRequest(ModelState);
+            var actualizado = await productoService.Update(producto);
+            if (actualizado.exito)
+                return Ok(actualizado);
+            else
+                return BadRequest(actualizado);
         }
 
         /// <summary>
@@ -82,10 +102,15 @@ namespace WebApiNetCore2Demo.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        [ProducesResponseType(404)]
-        public ActionResult<bool> Delete(int id)
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> Delete(int id)
         {
-            return NotFound();
+            var eliminado = await productoService.Delete(id);
+            if (eliminado.exito)
+                return NotFound(Constantes.MENSAJE_NOT_FOUND);
+            else
+                return Ok(eliminado);
         }
     }
 }

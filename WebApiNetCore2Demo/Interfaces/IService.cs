@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using WebApiNetCore2Demo.Utils;
 
 namespace WebApiNetCore2Demo.Interfaces
 {
@@ -13,13 +15,34 @@ namespace WebApiNetCore2Demo.Interfaces
         /// Obtiene todos los registros
         /// </summary>
         /// <returns></returns>
-        IEnumerable<TEntity> GetAll();
+        Task<IEnumerable<TEntity>> GetAll();
 
         /// <summary>
         /// Obtiene un registro en base a su id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        TEntity GetById(TKey id);
+        Task<TEntity> GetById(TKey id);
+
+        /// <summary>
+        /// Guarda un registro en base de datos
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        Task<ServerResponse> Add(TEntity entity);
+
+        /// <summary>
+        /// Actualiza un registro en base de datos
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        Task<ServerResponse> Update(TEntity entity);
+
+        /// <summary>
+        /// Elimina un registro en base de datos
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<ServerResponse> Delete(TKey id);
     }
 }

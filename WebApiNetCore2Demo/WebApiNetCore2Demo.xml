@@ -29,19 +29,19 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.Post(System.String)">
+        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.Post(WebApiNetCore2Demo.Models.Database.Producto)">
             <summary>
             Guarda un producto
             </summary>
-            <param name="value"></param>
+            <param name="producto"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.Put(System.Int32,System.String)">
+        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.Put(System.Int32,WebApiNetCore2Demo.Models.Database.Producto)">
             <summary>
             Actualiza un producto en base a su id
             </summary>
             <param name="id"></param>
-            <param name="value"></param>
+            <param name="producto"></param>
             <returns></returns>
         </member>
         <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.Delete(System.Int32)">
@@ -105,6 +105,27 @@
         <member name="M:WebApiNetCore2Demo.Interfaces.IService`2.GetById(`0)">
             <summary>
             Obtiene un registro en base a su id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Interfaces.IService`2.Add(`1)">
+            <summary>
+            Guarda un registro en base de datos
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Interfaces.IService`2.Update(`1)">
+            <summary>
+            Actualiza un registro en base de datos
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Interfaces.IService`2.Delete(`0)">
+            <summary>
+            Elimina un registro en base de datos
             </summary>
             <param name="id"></param>
             <returns></returns>
@@ -182,19 +203,6 @@
             <param name="logger"></param>
             <param name="repository"></param>
         </member>
-        <member name="M:WebApiNetCore2Demo.Services.ProductoService.GetAll">
-            <summary>
-            Obtiene la lista de productos
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:WebApiNetCore2Demo.Services.ProductoService.GetById(System.Int32)">
-            <summary>
-            Obtiene un producto por id
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
         <member name="T:WebApiNetCore2Demo.Startup">
             <summary>
             Contiene toda la configuracion de la api de inicio
@@ -250,6 +258,37 @@
             Obtiene la url del json de swagger en base a una version
             </summary>
             <param name="ApiVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WebApiNetCore2Demo.Utils.Constantes">
+            <summary>
+            Constantes utilizadas en la api
+            </summary>
+        </member>
+        <member name="T:WebApiNetCore2Demo.Utils.ServerResponse">
+            <summary>
+            Clase para manejar las respuestas
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="T:WebApiNetCore2Demo.Utils.Utilerias">
+            <summary>
+            Utilerias
+            </summary>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Utils.Utilerias.GenerarRespuestaCorrecta(System.Object)">
+            <summary>
+            Crea un objeto ServerResponse para las respuestas correctas
+            </summary>
+            <param name="datos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Utils.Utilerias.GenerarRespuestaExcepcion(System.Exception,System.Object)">
+            <summary>
+            Crea un objeto ServerResponse para el manejo de excepciones
+            </summary>
+            <param name="ex"></param>
+            <param name="datos"></param>
             <returns></returns>
         </member>
     </members>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebApiNetCore2Demo.Models.Database;
 
 namespace WebApiNetCore2Demo.Repositories
@@ -12,31 +13,31 @@ namespace WebApiNetCore2Demo.Repositories
         /// Agrega un nuevo registro
         /// </summary>
         /// <param name="entity"></param>
-        void Add(Producto entity);
+        Task<Producto> Add(Producto entity);
 
         /// <summary>
         /// Elimina un registro en base a su id
         /// </summary>
         /// <param name="id"></param>
-        void Delete(int id);
+        Task<bool> Delete(int id);
 
         /// <summary>
         /// Actualiza un registro
         /// </summary>
         /// <param name="entity"></param>
-        void Update(Producto entity);
+        Task<Producto> Update(Producto entity);
 
         /// <summary>
         /// Obtiene todos los registros
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Producto> GetAll();
+        Task<IEnumerable<Producto>> GetAll();
 
         /// <summary>
         /// Obtiene un registro en base a su id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Producto GetById(int id);
+        Task<Producto> GetById(int id);
     }
 }
