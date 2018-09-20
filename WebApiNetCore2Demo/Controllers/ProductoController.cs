@@ -38,7 +38,7 @@ namespace WebApiNetCore2Demo.Controllers
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetProductos()
+        public async Task<IActionResult> GetAll()
         {
             var productos = await productoService.GetAll();
             return Ok(productos);
@@ -52,7 +52,7 @@ namespace WebApiNetCore2Demo.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var producto = await productoService.GetById(id);
             if (producto == null)
@@ -71,11 +71,18 @@ namespace WebApiNetCore2Demo.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Post([FromBody] Producto producto)
         {
-            var guardado = await productoService.Add(producto);
-            if (guardado.exito)
-                return Ok(guardado);
+            if (ModelState.IsValid)
+            {
+                var guardado = await productoService.Add(producto);
+                if (guardado.exito)
+                    return Ok(guardado);
+                else
+                    return BadRequest(guardado);
+            }
             else
-                return BadRequest(guardado);
+            {
+                return BadRequest(producto);
+            }
         }
 
         /// <summary>
@@ -89,11 +96,18 @@ namespace WebApiNetCore2Demo.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Put(int id, [FromBody] Producto producto)
         {
-            var actualizado = await productoService.Update(producto);
-            if (actualizado.exito)
-                return Ok(actualizado);
+            if (ModelState.IsValid)
+            {
+                var actualizado = await productoService.Update(producto);
+                if (actualizado.exito)
+                    return Ok(actualizado);
+                else
+                    return BadRequest(actualizado);
+            }
             else
-                return BadRequest(actualizado);
+            {
+                return BadRequest(producto);
+            }
         }
 
         /// <summary>

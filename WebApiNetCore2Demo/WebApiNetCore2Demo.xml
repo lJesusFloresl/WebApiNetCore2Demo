@@ -16,13 +16,13 @@
             </summary>
             <param name="productoService"></param>
         </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.GetProductos">
+        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.GetAll">
             <summary>
             Obtiene la lista de productos
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.Get(System.Int32)">
+        <member name="M:WebApiNetCore2Demo.Controllers.ProductoController.GetById(System.Int32)">
             <summary>
             Obtiene un producto por id
             </summary>

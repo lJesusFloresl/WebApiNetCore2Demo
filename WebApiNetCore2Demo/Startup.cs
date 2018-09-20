@@ -4,20 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
 using Microsoft.Extensions.Logging;
 using WebApiNetCore2Demo.Services;
 using WebApiNetCore2Demo.Interfaces;
-using WebApiNetCore2Demo.Models;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using WebApiNetCore2Demo.Routes;
 using Microsoft.EntityFrameworkCore;
 using WebApiNetCore2Demo.Models.Database;
 using WebApiNetCore2Demo.Repositories;
 using WebApiNetCore2Demo.Implementations;
-using System.Linq;
-using WebApiNetCore2Demo.Controllers;
 
 namespace WebApiNetCore2Demo
 {
