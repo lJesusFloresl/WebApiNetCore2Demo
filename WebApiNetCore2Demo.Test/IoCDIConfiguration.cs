@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting.Internal;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.Extensions.Logging;
+using WebApiNetCore2Demo.Controllers;
 using WebApiNetCore2Demo.Implementations;
 using WebApiNetCore2Demo.Interfaces;
 using WebApiNetCore2Demo.Models.Database;
@@ -43,12 +40,21 @@ namespace WebApiNetCore2Demo.Test
             SetupObject setup = new SetupObject();
 
             // Base de datos
-            // var options = new DbContextOptionsBuilder<ComprasContext>().UseSqlServer(DB_CONNECTION_STRING).Options;
             var options = new DbContextOptionsBuilder<ComprasContext>().UseInMemoryDatabase(DB_NAME).Options;
             setup.context = new ComprasContext(options);
-            
+
+            // Logger
+            var serviceProvider = new ServiceCollection().AddLogging().BuildServiceProvider();
+            var factory = serviceProvider.GetService<ILoggerFactory>();
+
             // Repositorios
             setup.productoRepository = new ProductoRepository(setup.context);
+
+            // Servicios
+            setup.productoService = new ProductoService(factory.CreateLogger<ProductoService>(), setup.productoRepository);
+
+            // Controladores
+            setup.productoController = new ProductoController(setup.productoService);
 
             return setup;
         }

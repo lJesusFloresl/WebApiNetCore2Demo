@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Extensions.Logging;
+using WebApiNetCore2Demo.Controllers;
+using WebApiNetCore2Demo.Interfaces;
 using WebApiNetCore2Demo.Models.Database;
 using WebApiNetCore2Demo.Repositories;
+using WebApiNetCore2Demo.Services;
 
 namespace WebApiNetCore2Demo.Test
 {
@@ -13,5 +14,7 @@ namespace WebApiNetCore2Demo.Test
     {
         public ComprasContext context { get; set; }
         public IProductoRepository productoRepository { get; set; }
+        public IService<int, Producto> productoService { get; set; }
+        public ProductoController productoController { get; set; }
     }
 }
