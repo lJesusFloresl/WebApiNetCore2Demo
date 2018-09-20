@@ -81,6 +81,7 @@ namespace WebApiNetCore2Demo
 
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddDbContext<ComprasContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:ComprasConnection"]));
+            //services.AddDbContext<ComprasContext>(options => options.UseInMemoryDatabase("Compras"));
             services.AddTransient<IService<int, Producto>, ProductoService>();
             services.AddTransient<IProductoRepository, ProductoRepository>();
 
