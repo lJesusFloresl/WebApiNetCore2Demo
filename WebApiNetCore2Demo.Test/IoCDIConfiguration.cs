@@ -34,7 +34,7 @@ namespace WebApiNetCore2Demo.Test
         /// Simula la inyeccion de dependencias para que funcionen los test sin usar mocks sin funcionalidad
         /// </summary>
         /// <returns></returns>
-        public static SetupObject InicializaDependenciasManualmente()
+        public static SetupObject InicializarDependenciasManualmente()
         {
             // Objeto principal
             SetupObject setup = new SetupObject();

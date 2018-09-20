@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApiNetCore2Demo.Interfaces;
 using WebApiNetCore2Demo.Models.Database;
 using WebApiNetCore2Demo.Routes;
-using WebApiNetCore2Demo.Utils;
 
 namespace WebApiNetCore2Demo.Controllers
 {
@@ -65,7 +62,7 @@ namespace WebApiNetCore2Demo.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Post([FromBody] Producto producto)
+        public async Task<IActionResult> Post(Producto producto)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +84,7 @@ namespace WebApiNetCore2Demo.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Put(int id, [FromBody] Producto producto)
+        public async Task<IActionResult> Put(int id, Producto producto)
         {
             if (ModelState.IsValid)
             {

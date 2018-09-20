@@ -20,6 +20,10 @@ namespace WebApiNetCore2Demo
     /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="env"></param>
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -29,22 +33,21 @@ namespace WebApiNetCore2Demo
             this.Configuration = builder.Build();
         }
 
+        /// <summary>
+        /// Variable que contiene toda la configuracion de la aplicacion
+        /// </summary>
         public IConfigurationRoot Configuration { get; private set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container. 
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             #region Configuracion de Mvc
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddOptions();
-            services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.SuppressConsumesConstraintForFormFileParameters = true;
-                options.SuppressInferBindingSourcesForParameters = true;
-                options.SuppressModelStateInvalidFilter = true;
-            });
-
+            
             #endregion
 
             #region Configuracion de Swagger y Versionamiento de Api
@@ -75,7 +78,6 @@ namespace WebApiNetCore2Demo
 
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddDbContext<ComprasContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:ComprasConnection"]));
-            //services.AddDbContext<ComprasContext>(options => options.UseInMemoryDatabase("Compras"));
             services.AddTransient<IService<int, Producto>, ProductoService>();
             services.AddTransient<IProductoRepository, ProductoRepository>();
 

@@ -208,6 +208,23 @@
             Contiene toda la configuracion de la api de inicio
             </summary>
         </member>
+        <member name="M:WebApiNetCore2Demo.Startup.#ctor(Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="env"></param>
+        </member>
+        <member name="P:WebApiNetCore2Demo.Startup.Configuration">
+            <summary>
+            Variable que contiene toda la configuracion de la aplicacion
+            </summary>
+        </member>
+        <member name="M:WebApiNetCore2Demo.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container. 
+            </summary>
+            <param name="services"></param>
+        </member>
         <member name="M:WebApiNetCore2Demo.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
             <summary>
             This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

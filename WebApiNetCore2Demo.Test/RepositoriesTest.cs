@@ -22,7 +22,7 @@ namespace WebApiNetCore2Demo.Test
         [TestInitialize]
         public void Setup()
         {
-            megaMock = IoCDIConfiguration.InicializaDependenciasManualmente();
+            megaMock = IoCDIConfiguration.InicializarDependenciasManualmente();
         }
 
         /// <summary>
