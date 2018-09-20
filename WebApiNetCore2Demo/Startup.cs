@@ -116,9 +116,6 @@ namespace WebApiNetCore2Demo
                 app.UseHsts();
             }
 
-            // Habilita HTTPS
-            app.UseHttpsRedirection();
-
             // Agrega el log
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
