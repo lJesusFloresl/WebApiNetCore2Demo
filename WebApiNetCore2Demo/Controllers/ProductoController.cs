@@ -51,14 +51,10 @@ namespace WebApiNetCore2Demo.Controllers
         /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetById(int id)
         {
             var producto = await productoService.GetById(id);
-            if (producto == null)
-                return NotFound(Constantes.MENSAJE_NOT_FOUND);
-            else
-                return Ok(producto);
+            return Ok(producto);
         }
 
         /// <summary>
@@ -74,10 +70,7 @@ namespace WebApiNetCore2Demo.Controllers
             if (ModelState.IsValid)
             {
                 var guardado = await productoService.Add(producto);
-                if (guardado.exito)
-                    return Ok(guardado);
-                else
-                    return BadRequest(guardado);
+                return Ok(guardado);
             }
             else
             {
@@ -99,10 +92,7 @@ namespace WebApiNetCore2Demo.Controllers
             if (ModelState.IsValid)
             {
                 var actualizado = await productoService.Update(producto);
-                if (actualizado.exito)
-                    return Ok(actualizado);
-                else
-                    return BadRequest(actualizado);
+                return Ok(actualizado);
             }
             else
             {
@@ -117,14 +107,10 @@ namespace WebApiNetCore2Demo.Controllers
         /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
             var eliminado = await productoService.Delete(id);
-            if (eliminado.exito)
-                return NotFound(Constantes.MENSAJE_NOT_FOUND);
-            else
-                return Ok(eliminado);
+            return Ok(eliminado);
         }
     }
 }
